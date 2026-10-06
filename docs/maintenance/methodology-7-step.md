@@ -1,40 +1,44 @@
 ---
 doc_id: solon-product-methodology-7-step
-title: "Methodology — 7-step flow + Gate 1~7 표기"
+title: "Methodology — five-phase default + legacy Gate compatibility"
 visibility: oss-public
 doc_type: maintenance-doc
 language: ko
-updated: 2026-08-27
-summary: "7-step flow summary applied even to this repo's own development. Gate display labels are 1~7; new CLI examples use --gate 6 style."
-load_when: "Read for a quick refresher on the 7-step / Gate label convention. Deeper policy lives in routed context (kernel.md, commands/*.md, policies/*.md)."
+updated: 2026-10-06
+summary: "새 작업의 5단계 기본 흐름과 기존 7-step/Gate runtime 호환 안내."
+load_when: "Read for the default process, canonical artifacts, human review boundary, or legacy Gate compatibility."
 ---
 
-# Methodology — 7-step flow
+# Methodology — five-phase default
 
-본 문서는 0.7.2 이전 CLAUDE.md 의 § 7-step flow 요약 섹션을 떼어내 분리한
-maintenance doc 이다. 본 repo 자체 개발에도 동일 7-step 이 적용된다. routed
-context 가 SSoT 이고 (`kernel.md`, `commands/*.md`, `policies/*.md`), 본
-문서는 빠른 참조용 요약이다.
+기존 링크 호환을 위해 파일명은 유지한다. 새 작업은 최대 5단계(`five-phase` 프로세스 별칭)로 진행한다. 새 CLI 명령은 아니다. 정책 SSoT와 산출물 소유권은 [`lean-procedure-refactor-pack`](../../templates/.sfs-local-template/context/policies/lean-procedure-refactor-pack.ko.md)에 있다.
 
-## 7-step 요약
+| 단계 | 목적 | Canonical 산출물 |
+|---|---|---|
+| 1 | 요구사항/도메인 정렬 | `requirement.md` |
+| 2 | DDD/시스템 설계 | `architecture-design.md` |
+| 3 | 구현 계약 | `api-contract.md` + `implementation.md` |
+| 4 | TDD 구현 및 검증 | 코드·테스트·runtime evidence |
+| 5 | 마무리 | 최소 `retro.md`(내부 학습) + `report.md`(결과·evidence·위험·다음 단계·인계) |
 
-1. **CEO 요구사항 정리** — Gate 2 (Brainstorm)
-2. **CEO plan** — Gate 3 (Plan)
-3. **CTO Generator ↔ CPO Evaluator sprint contract**
-4. **`/sfs implement` 로 CTO 구현** — Gate 4 (Design/Entry) — 실제 코드 +
-   `implement.md` / `log.md` evidence
-5. **CPO review** — Gate 6 (Review)
-6. **CTO review 확인 + 사용자 최종 통과**
-7. **회고 / 문서화**
+코딩 전 3단계는 계약 완결성과 테스트 계획 커버리지의 자동/기계적 점검만 수행하며 사람 승인 gate가 아니다.
+**사람 검토 1회**는 4단계 구현·검증 후, 5단계 마무리 전에 실제 코드·테스트·runtime evidence를 요구사항 및 설계와 대조한다.
+범위는 요구 방향·구현 완결성/동작 정확성·아키텍처/도메인 경계와 구조 결함·데이터/보안/운영 위험·핵심 테스트 누락뿐이다.
+간결한 `PASS`/`BLOCKED`와 BLOCKER/HIGH 지적·근거만 남긴다. BLOCKER/HIGH는 차단, MEDIUM은 정확성/위험 영향만 추적한다.
+NIT는 action list에서 제외하고 formatter/linter/CI로 보내거나 무시한다. 비차단 nit로 재검토하지 않으며 `partial`은 기본 진행 상태가 아니다.
+검토 재개는 새로운 위험 trigger·계약/아키텍처 변경·미해결 실질적 이의·검토한 작업의 BLOCKER/HIGH 결함을 드러내는 품질 gate 실패 때만 한다(SSoT 참조). 수정·검증 후 같은 검토 시점으로 돌아오며 구현 전 점검 실패를 사람 승인 gate로 바꾸지 않는다.
+ADR은 조건부이며 `architecture-design.md`는 ADR ID만 참조한다. 검토한 코드/문서 revision·evidence·결정은 `implementation.md`, 일반 인계 내용은 `report.md`에 둔다.
+별도 handoff는 세션 중단·명시적 일시정지/재개·장기 미완료·소유권 이전·다른 세션이 필요한 blocker 때만 작성한다.
 
-## Decision → evidence → publication
+## 기존 7-step/Gate 호환
 
-Gate 3 (Plan)은 ADR eligibility가 있는 durable decision을 기록한다. Gate 6
-(Review)는 그 ADR id를 포함한 완료·검증·위험·후속 evidence를 report/retro에
-남긴다. Gate 7 (Retro)의 기본 `sfs retro` close는 두 기록이 준비된 뒤, 그리고
-workbench/event compaction 전에 `daily-handoff.md`와 파생
-`daily-handoff.html`을 자동 발행한다. 이 발행은 별도 사용자 명령이 아니며,
-실패하면 close도 실패한다.
+기존 7-step을 새 작업의 필수 사람 승인 흐름으로 안내하지 않는다. `sfs start`, `brainstorm`, `plan`, `implement`, `review --gate 3`, `review --gate 6`, `retro`, `report` 명령과 기존 workbench/state는 유지한다. 아래 Gate 설명은 runtime 호환용이다.
+기존 Gate 3/6의 agent/자동/runtime evidence와 실질적인 사람 검토 1회는 구별한다.
+Gate 3의 구현 전 점검은 사람 승인을 요구하지 않으며 Gate 6 evidence는 구현 후 사람 검토를 대체하지 않는다.
+기존 `plan.md`/`implement.md` 입력과 Gate 검증은 보존하며 `implementation.md`로 단순 개명하지 않는다.
+`review.md`/`handoff.md`/`daily-handoff.md`/`daily-handoff.html`은 계속 읽을 수 있고 호환되지만 새 작업마다 필수/자동 생성하지 않는 것이 정책이다.
+이번 slice는 작성 정책만 바꾼다. 기존 runtime 자동 발행·실패 처리는 그대로이며 CLI 생성/검증 전환은 후속 slice다.
+기존 사용자 workbench 데이터는 삭제하지 않는다. 향후 낡은 임시 문서 정리는 활성 state/tests 참조 없음 확인과 필수 이력 근거 보존 후에만 허용한다.
 
 ## 착수 전 (step 1 정렬)
 
@@ -103,12 +107,10 @@ slice 는 본 시도 전 read-only 정찰(RECON_RUN_BEFORE_COMMIT,
 
 ## Signal vs hard block
 
-Gate 는 all signal-only (ALT-INV-3 never-hard-block). 단 CPO review 자체는
-sprint flow 의 필수 단계이며, review executor / tool 은 Codex / Gemini /
-Claude / custom 중 선택 가능하다. `/sfs review` 는 artifact acceptance
-review 이고, code review 는 자동 또는 명시 `code` lens 일 때만 적용한다.
-Production open 을 수반하면 Release Readiness evidence (secret / auth /
-data / monitoring / rollback / cost) 를 review 또는 retro-light 에 남긴다.
+Gate 는 all signal-only (ALT-INV-3 never-hard-block). 기존 CPO review는 runtime evidence 절차이며 사람 승인 횟수가 아니다.
+review executor / tool은 Codex / Gemini / Claude / custom 중 선택 가능하다. `/sfs review`는 artifact acceptance
+review이고, code review는 자동 또는 명시 `code` lens일 때만 적용한다. 자동/runtime evidence는 실질적인 사람 검토와 구별한다.
+Production open을 수반하면 Release Readiness evidence (secret / auth / data / monitoring / rollback / cost)를 review 또는 retro-light에 남긴다.
 
 ## 피드백 플라이휠 (record → reflect)
 
@@ -138,7 +140,6 @@ cross-cutting product function/lens다. 이 여섯 required council participatio
 role은 brainstorm부터 Gate 6까지 *항상* 개념적 sub-agent로 개입한다.
 `.sfs-local/divisions.yaml` 의 `activation_state` 는 *깊이* 만 제어하지 참여
 여부를 제어하지 않는다.
-
 상세 규약: [`policies/six-division-council.md`](policies/six-division-council.md).
 
 ## Model-tier quick reference

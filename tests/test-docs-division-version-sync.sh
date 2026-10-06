@@ -24,12 +24,12 @@ assert_not_contains() {
   fi
 }
 
-expected_version="0.18.0"
+expected_version="0.19.0"
 actual_version="$(tr -d '[:space:]' < "${DIST_DIR}/VERSION")"
 [[ "${actual_version}" == "${expected_version}" ]] \
   || fail "VERSION is ${actual_version}, expected ${expected_version}"
 
-assert_contains "${DIST_DIR}/CHANGELOG.md" "## [${expected_version}] - 2026-09-09" "changelog current version"
+assert_contains "${DIST_DIR}/CHANGELOG.md" "## [${expected_version}] - 2026-10-06" "changelog current version"
 assert_contains "${DIST_DIR}/RELEASE-NOTES.md" "## ${expected_version}" "release notes current version"
 
 assert_contains "${DIST_DIR}/README.md" "5개 조직 본부 + cross-cutting taxonomy lens의 6개 필수 council role" "README council model"

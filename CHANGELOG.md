@@ -1,5 +1,17 @@
 ## [Unreleased]
 
+## [0.19.0] - 2026-10-06
+
+> **A five-phase process centers human review on implementation direction, correctness, and architecture. 5단계 프로세스는 구현 방향·정확성·아키텍처 중심의 실질적인 사람 검토를 기본으로 합니다.**
+
+### Changed / 변경
+
+- **Five-phase default / 5단계 기본 흐름** — Requirements/domain alignment (`requirement.md`) → DDD/system design → implementation contract → TDD implementation and verification → closeout. 요구사항/도메인 정렬(`requirement.md`) → DDD/시스템 설계 → 구현 계약 → TDD 구현·검증 → 마무리로 산출물 소유권을 정리합니다.
+- **Substantive post-implementation review / 구현 후 실질 검토** — One human review after implementation and verification checks actual code, tests, and runtime evidence for direction, completeness, correctness, architecture/domain boundaries, material risks, and missing critical tests. Pre-coding checks remain mechanical. 구현·검증 후 사람 검토 1회에서 실제 코드·테스트·실행 근거로 방향·완결성·정확성·구조·주요 위험·핵심 테스트 누락을 판단하며, 구현 전에는 기계적 점검만 수행합니다.
+- **Risk-based verdicts / 위험 기반 판정** — `PASS`/`BLOCKED` with BLOCKER/HIGH findings; non-blocking nits never reopen review or drive repeated `partial` loops. BLOCKER/HIGH 근거로 판정하고, 비차단 nit는 반복 `partial`이나 재검토를 만들지 않습니다.
+- **Conditional ADR and handoff / 조건부 ADR·인계** — ADRs cover qualifying durable or consequential decisions; separate handoffs require a continuity trigger. Routine closeout uses `retro.md` and `report.md`. ADR은 지속되거나 중대한 결정에, 별도 인계는 중단·재개·소유권 이전 등 연속성 조건에만 작성하며 일반 마무리는 `retro.md`·`report.md`에 둡니다.
+- **Policy-only compatibility / 작성 정책과 기존 호환성** — Existing CLI commands, Gate/state contracts, workbench data, and runtime daily-handoff generation remain unchanged. 기존 CLI·Gate/state·workbench 데이터·runtime 일일 인계 생성은 유지하며, 새 산출물의 CLI 생성·검증 전환은 후속 작업입니다.
+
 ## [0.18.0] - 2026-09-09
 
 > **A deterministic review-verdict contract keeps converged reviews closed on the stated PASS criteria, while the shipped consumer quality gate gives Python, Node, and Gradle projects seven redacted, fail-closed verification stages. 결정적 리뷰 판정 계약은 수렴한 리뷰를 명시된 PASS 조건에 따라 닫고, 배포된 소비자 품질 게이트는 Python·Node·Gradle 프로젝트에 마스킹 증거 기반 7단계 fail-closed 검증을 제공합니다.**

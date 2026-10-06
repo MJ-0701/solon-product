@@ -7,6 +7,18 @@
 
 ---
 
+## 0.19.0
+
+Five-phase process and substantive post-implementation review / 5단계 프로세스와 구현 후 실질 검토를 기본으로 하는 정책 릴리스입니다.
+
+- **Five phases / 5단계** — Align requirements in `requirement.md`, design the system, define the implementation contract, implement and verify with TDD, then close out. `requirement.md`의 요구사항 정렬 → 시스템 설계 → 구현 계약 → TDD 구현·검증 → 마무리로 진행합니다.
+- **One substantive human review / 실질적인 사람 검토 1회** — After implementation, inspect code, tests, and runtime evidence for direction, correctness, architecture, material risks, and critical-test gaps. Pre-coding checks are mechanical. 구현 후 실제 근거로 방향·정확성·아키텍처·주요 위험·핵심 테스트 누락을 검토하며 구현 전 점검은 기계적으로 수행합니다. BLOCKER/HIGH findings yield `BLOCKED`; non-blocking nits never reopen `PASS` or drive `partial` loops. BLOCKER/HIGH는 차단하고 비차단 nit로 PASS를 다시 열거나 partial을 반복하지 않습니다.
+- **Conditional records / 조건부 기록** — Write ADRs for qualifying durable or consequential decisions and separate handoffs only when continuity requires them; routine closeout uses `retro.md` and `report.md`. ADR은 지속되거나 중대한 결정에, 별도 인계는 중단·재개·소유권 이전 등에만 작성하고 일반 마무리는 `retro.md`·`report.md`에 둡니다.
+
+This release changes authoring policy; existing CLI, Gate/state, workbench data, and runtime daily-handoff generation remain compatible. 작성 정책 변경이며 기존 CLI·Gate/state·workbench 데이터·runtime 일일 인계 생성은 유지합니다.
+
+---
+
 ## 0.18.0
 
 Deterministic review verdicts and a shipped seven-stage consumer quality gate / 결정적 리뷰 판정과 배포된 7단계 소비자 품질 게이트를 제공하는 minor release입니다.

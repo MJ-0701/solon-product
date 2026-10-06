@@ -4,7 +4,7 @@ title: "ADR Template"
 visibility: oss-public
 doc_type: maintenance-template
 language: ko
-updated: 2026-09-02
+updated: 2026-10-06
 summary: "Copyable template for a single architecture decision record."
 load_when: "Read when creating a new ADR under docs/maintenance/adr/."
 ---
@@ -36,7 +36,7 @@ ADR Template — 복사해서 사용:
 
 ## Eligibility
 
-{해당 gate(Irreversible / Costly / Cross-team / High-risk)와 한 줄 근거.
+{해당 gate는 adr-policy.md의 Eligibility Gate를 참조하고 한 줄 근거를 남긴다.
 어느 gate에도 해당하지 않으면 이 문서는 ADR이 아니라 task log 감이다.}
 
 ## Context (immutable)

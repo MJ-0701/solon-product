@@ -4,7 +4,7 @@ title: "ADR Policy — Architecture Decision Record 운영 정책"
 visibility: oss-public
 doc_type: maintenance-doc
 language: ko
-updated: 2026-09-02
+updated: 2026-10-06
 summary: "Eligibility, lifecycle, ownership, and registry rules for ADRs."
 load_when: "Read before creating or changing an architecture decision record."
 ---
@@ -17,22 +17,26 @@ load_when: "Read before creating or changing an architecture decision record."
 
 ## 1. Eligibility Gate — 작성 대상 판정
 
-아래 gate 중 **하나라도** 해당하면 ADR을 작성한다 (MUST):
+ADR은 기본 산출물이 아니다. 아래 gate 중 **하나라도** 해당할 때만 작성한다 (MUST):
 
 | Gate | 기준 |
 |---|---|
+| Durable | sprint를 넘어 유지·재사용할 구조적 결정이며 이후 변경 시 근거 추적이 필요 |
 | Irreversible | 되돌리기가 사실상 불가능하거나 되돌리는 데 1 sprint 이상 필요 (예: 데이터 마이그레이션, 외부 공개 API 계약, 저장 포맷) |
 | Costly | 도입·전환 비용이 큼 (유료 인프라/벤더 계약, 대규모 리라이트) |
 | Cross-team | 두 개 이상의 팀·도메인 경계에 영향 (공유 스키마, 인증 방식, 조직 표준 변경) |
 | High-risk | 실패 시 보안 사고·데이터 손실·가용성 저하로 이어질 수 있음 |
+| Externally breaking | 외부 소비자의 API·프로토콜·저장 계약 호환성을 깨뜨림 |
+| Contested | 대안이나 결정에 대한 실질적인 이견이 있어 근거와 해소 결과를 보존해야 함 |
 
 **작성하지 않는다**: 사소하고 되돌리기 쉬운 선택 (네이밍, 로컬 리팩토링,
 라이브러리 patch 버전 선택, 내부 구현 디테일). 이런 결정은 task log
 (커밋 메시지, 태스크 코멘트)에 남기고 ADR로 격상하지 않는다.
 
-판정이 애매하면 **작성한다** — 기록 비용이 재논의 비용보다 싸다.
+판정이 애매하면 해당 기준과 근거를 먼저 확인한다. 불확실성만으로 기본 생성하지 않는다.
 어느 gate에 해당하는지는 ADR 본문 `## Eligibility` 섹션에 한 줄 근거와
 함께 명시한다.
+`architecture-design.md`는 `ADR-NNNN`과 링크로 결정을 참조하고 ADR 본문을 복제하지 않는다.
 
 ## 2. Stable ID와 파일 위치
 
@@ -121,10 +125,15 @@ proposed ──▶ accepted ──▶ superseded
 - Follow-ups 는 체크박스 + 태스크 키로 남기고, 완료 시 체크한다.
 - Gate 3 (Plan)에서 eligible ADR을 결정·기록하고, Gate 6 (Review)의
   report/retro evidence 안에 **이미 존재하는** `ADR-NNNN | 경로 | 한 줄
-  rationale` 항목만 남긴다. Gate 7의 기본 `sfs retro` close가 그 항목을
-  `daily-handoff.md`/`.html` Decisions projection으로 자동 발행한다. ADR은
-  handoff를 위해 새로 만들거나 추측하지 않는다. SSoT는 ADR 파일이고 HTML은
-  재생성되는 파생 산출물이다. 흐름:
+  rationale` 항목만 남긴다. Gate 표기는 기존 runtime evidence이며 추가 사람 승인이 아니다.
+  새 작업의 최소 문서·단일 실질 검토·심각도·조건부 handoff 규칙은
+  [`lean-procedure-refactor-pack`](../../templates/.sfs-local-template/context/policies/lean-procedure-refactor-pack.ko.md)을 따른다.
+  기존 `review.md`/`handoff.md`/`daily-handoff.md`/`.html`은 계속 읽을 수 있고 호환된다.
+  legacy `sfs retro`의 Decisions projection 자동 발행은 기존 runtime 동작 설명이며
+  모든 새 작업에서 필수/자동 생성할 산출물을 뜻하지 않는다. 이번 slice는 runtime을 바꾸거나 workbench 데이터를 삭제하지 않는다.
+  향후 낡은 임시 문서의 archive/삭제는 활성 state/tests 참조 없음 확인과 필수 이력 근거 보존 후에만 허용한다.
+  ADR은 handoff를 위해 새로 만들거나 추측하지 않는다. SSoT는 ADR 파일이고 HTML은
+  재생성되는 파생 산출물이다. 기존 흐름:
   [`context/commands/daily.md`](../../templates/.sfs-local-template/context/commands/daily.md)
   의 MANAGER_HANDOFF.
 

@@ -9,6 +9,9 @@ load_when: ["always", "sfs", "route", "context"]
 Always keep entry docs small. Read `kernel.md` first, then only the matching
 module:
 
+For new work, load `policies/lean-procedure-refactor-pack.md` first (Korean:
+`policies/lean-procedure-refactor-pack.ko.md`): five-phase default and legacy compatibility.
+
 ## Commands (lifecycle rails)
 
 - `commands/start.md` — start / new sprint / bash-first Next.
@@ -105,7 +108,7 @@ module:
 - `policies/gate6-data-validation-pack.md` — mock/fixture/seed/data validation at Gate 6.
 - `policies/agentic-security-logging-pack.md` — OWASP-style security, console-log, and Datadog evidence guard.
 - `policies/postdev-external-review-pack.md` — post-development Claude/Gemini/Codex review evidence.
-- `policies/lean-procedure-refactor-pack.md` — keep/shrink/remove procedural bottleneck review.
+- `policies/lean-procedure-refactor-pack.md` — five-phase default / artifact ownership / one human review / risk triggers / conditional ADR / legacy 7-step compatibility; keep/shrink/remove procedural bottlenecks.
 - `policies/*-knowledge-pack.md` — English compact guidance packs for each lens/pack.
 - `policies/*-knowledge-pack.ko.md` — Korean compact guidance packs for each lens/pack.
 - `policies/*.ko.md` (general rule) — every `*.ko.md` is the Korean mirror of its same-named en policy; load the mirror when the session/workspace language is Korean. Mirrors keep their en counterpart's ASCII anchor tokens (uppercase section ids and check ids) verbatim; heading prose may be localized, so cross-reference by anchor token, not heading text.

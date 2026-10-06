@@ -89,7 +89,7 @@ load_when: ["always", "sfs", "entry"]
   self-CPO/SFS cross, use Claude Cowork, Gemini, GitHub `@codex`, or future
   reviewers when available; unavailable optional reviewers are recorded, not
   turned into user chores.
-- Lean procedure review is ambient for SFS itself: keep safety invariants while shrinking ceremony; Process self-audit is ambient, loading `lean-procedure-refactor-pack` to ask whether repeated gates still serve the current objective and, after 3 meta-system WUs, schedule at least 1 user-outcome WU or record a waiver.
+- For new work, load `policies/lean-procedure-refactor-pack.md`: five-phase default, artifact ownership, one human review and legacy compatibility; existing runtime gates below remain in force. Lean procedure review is ambient and keeps safety invariants; Process self-audit is ambient: ask whether repeated gates serve the objective; after 3 meta-system WUs, schedule at least 1 user-outcome WU or record a waiver.
 - Capture is not a lifecycle step: use `sfs capture` only as a minimal evidence
   primitive for approval, waiver, decision, blocker, or external evidence that a
   later gate must remember. Do not ask the user to run capture as routine flow.

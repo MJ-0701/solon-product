@@ -340,8 +340,9 @@ chmod +x "${AUTHOR_CHECK}/tools/must-not-run.sh"
 )
 
 # Result metadata must expose the prompt byte count and measured elapsed wall time.
-assert_contains "${VERDICTS}/.sfs-local/sprints/2026-W37-sprint-1/review.md" '- prompt_bytes: `'
-assert_contains "${VERDICTS}/.sfs-local/sprints/2026-W37-sprint-1/review.md" '- wall_time_sec: `'
+verdicts_sprint_id="$(<"${VERDICTS}/.sfs-local/current-sprint")"
+assert_contains "${VERDICTS}/.sfs-local/sprints/${verdicts_sprint_id}/review.md" '- prompt_bytes: `'
+assert_contains "${VERDICTS}/.sfs-local/sprints/${verdicts_sprint_id}/review.md" '- wall_time_sec: `'
 
 # A safety timeout is recorded as a single manual retry instruction; it never retries
 # the executor automatically.
@@ -361,8 +362,9 @@ chmod +x "${TIMEOUT_FIXTURE}/tools/timeout-executor.sh"
   timeout_rc=$?
   set -e
   [[ "${timeout_rc}" -ne 0 ]] || fail "timed-out executor must fail the review invocation"
-  assert_contains .sfs-local/sprints/2026-W37-sprint-1/review.md '- next: timeout: 번들 축소 후 1회 재시도'
-  assert_contains .sfs-local/sprints/2026-W37-sprint-1/review.md '- retry_policy: `manual only; no automatic retry`'
+  timeout_sprint_id="$(<.sfs-local/current-sprint)"
+  assert_contains ".sfs-local/sprints/${timeout_sprint_id}/review.md" '- next: timeout: 번들 축소 후 1회 재시도'
+  assert_contains ".sfs-local/sprints/${timeout_sprint_id}/review.md" '- retry_policy: `manual only; no automatic retry`'
 )
 
 echo "test-review-verdict-contract: contract_text and runtime verdict contract OK"
